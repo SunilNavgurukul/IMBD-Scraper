@@ -260,15 +260,10 @@ def analyse_actors(movie_list):
 			dict[i['imbd_actor_id']]={'name':movie['name'],'num_movie':0}
 			id_list.append(i["imbd_actor_id"])
 			set_list=list(set(id_list))
-	for movie in movie_list:
-		for z in movie['cast']:
-			# print(z)	
-			for x in set_list:
-				dict[z['imbd_actor_id']]['num_movies']=0
-				for j in id_list:
-					if x==j:
-						dict[z['imbd_actor_id']]['num_movies']+=1		
-		print(dict)
+	for movie in movies_list:
+		for actor in movie["cast"]:
+			actors_dic[actor['imbd_actor_id']]['num_movie'] += 1	
+	pprint.pprint(actors_dic)
 analyse_actors(all_det)
 
 
