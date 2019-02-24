@@ -116,7 +116,7 @@ def scrape_movie_details(movie_url):
 	time_sleep=random.randint(1,3)
 	#Task 8
 	file_url=movie_url['IMDB_url'][27:36]+'.json'
-	if os.path.exists('/home/sunil/Documents/sunil codes/Web Scraping/Moies_data/'+file_url):
+	if os.path.exists('./Moies_data/'+file_url):
 		pass
 	else:
 		movie_detail_dic={'name':'','director':'','country':'','language':[],'poster_image_url':'','bio':'','runtime':'','genre':''}
@@ -167,9 +167,9 @@ def scrape_movie_details(movie_url):
 		movie_detail_dic['genre']=genre[-1::-1][1:]
 		movie_detail_dic['runtime']=run_time,'mins'
 		movie_detail_dic['cast']=scrape_movie_cast(movie_url)
-		with open ('/home/sunil/Documents/sunil codes/Web Scraping/Moies_data/'+file_url,"w") as data:
+		with open ('./Moies_data/'+file_url,"w") as data:
 			json.dump(movie_detail_dic.copy(),data)
-	with open ('/home/sunil/Documents/sunil codes/Web Scraping/Moies_data/'+file_url,"r") as data:
+	with open ('./Moies_data/'+file_url,"r") as data:
 			read = data.read()
 			movie_detail_dic= json.loads(read)
 	return(movie_detail_dic)
@@ -195,7 +195,7 @@ def Analyse_movie_language(movie_list):
 	for movie in movie_list:
 		for lang in movie['language']:
 			dic_lang[lang]= 0
-	return dic_lang
+	# return dic_lang
 	for movie in movie_list:
 		for lang in movie['language']:
 			dic_lang[lang]+= 1
@@ -257,13 +257,13 @@ def analyse_actors(movie_list):
 	id_list=[]
 	for movie in movie_list:
 		for i in movie['cast']:
-			dict[i['imbd_actor_id']]={'name':movie['name'],'num_movie':0}
+			dict[i['imbd_actor_id']]={'name':i['name'],'num_movie':0}
 			id_list.append(i["imbd_actor_id"])
 			set_list=list(set(id_list))
-	for movie in movies_list:
+	for movie in movie_list:
 		for actor in movie["cast"]:
-			actors_dic[actor['imbd_actor_id']]['num_movie'] += 1	
-	pprint.pprint(actors_dic)
+			dict[actor['imbd_actor_id']]['num_movie'] += 1	
+	pprint.pprint(dict)
 analyse_actors(all_det)
 
 
